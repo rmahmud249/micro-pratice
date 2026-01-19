@@ -1,0 +1,254 @@
+Grade-calculations
+.model small
+.stack 100h
+
+.data
+msg1 db 'enter grade: $'
+excellent_msg db 0DH,0AH,'excellent$'
+good_msg db 0DH,0AH,'good$'
+average_msg db 0DH,0AH,'average$'
+poor_msg db 0DH,0AH, 'poor$'
+fail_msg  db 0DH,0AH, 'fail$'
+
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+
+    lea dx,msg1
+    mov ah,09H
+    int 21h
+
+    mov ah,01H
+    int 21h
+
+    cmp al,'A'
+    je excellent
+    cmp al,'B'
+    je good
+    cmp al,'C'
+    je average
+    cmp al,'D'
+    je poor
+    cmp al,'E'
+    je fail 
+    
+    jmp exit
+
+excellent:
+    lea dx,excellent_msg
+    jmp display
+
+good:
+    lea dx,good_msg
+    jmp display
+
+average:
+    lea dx,average_msg
+    jmp display
+
+poor:
+    lea dx,poor_msg
+    jmp display
+
+fail:
+    lea dx,fail_msg
+
+display:
+    mov ah,9
+    int 21h
+
+exit:
+    mov ah,4ch
+    int 21h
+main endp
+end main
+--------------------------
+greater-smaller
+.model small
+.stack 100h
+
+.data
+msg1 db 'enter first digit: $'
+msg2 db 0DH,0AH,'enter second digit: $'
+first_msg db  0DH,0AH,'first is larger$'
+second_msg db  0DH,0AH,'second is larger$'
+equal_msg db  0DH,0AH, 'both are equal$
+'
+num1 db ?
+num2 db ?
+
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+
+    lea dx,msg1
+    mov ah,9
+    int 21h
+
+    mov ah,1
+    int 21h
+    mov num1,al
+
+    lea dx,msg2
+    mov ah,9
+    int 21h
+
+    mov ah,1
+    int 21h
+    mov num2,al
+
+    mov al,num1
+    cmp al,num2  
+    
+    jg first_larger
+    jl second_larger
+    
+    lea dx,equal_msg
+    jmp display
+
+first_larger:
+    lea dx,first_msg
+    jmp display
+
+second_larger:
+    lea dx,second_msg
+
+display:
+    mov ah,9
+    int 21h
+    mov ah,4ch
+    int 21h
+
+main endp
+end main
+-----------------
+odd-even-and
+.model small
+.stack 100h
+.data
+msg1 db 'enter a digit: $'
+even_msg db 0DH,0AH,'even number!$'
+odd_msg db 0DH,0AH,'odd number!$'
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+    lea dx,msg1
+    mov ah,9
+    int 21h
+
+    mov ah,1
+    int 21h
+    sub al,30h       
+    and al,1        
+    jz even         
+
+    lea dx,odd_msg
+    jmp display
+
+even:
+    lea dx,even_msg
+
+display:
+    mov ah,9
+    int 21h
+    mov ah,4ch
+    int 21h
+main endp
+end main
+------------------------
+odd-even-and
+.model small
+.stack 100h
+.data
+msg1 db 'enter a digit: $'
+even_msg db 0DH,0AH,'even number!$'
+odd_msg db 0DH,0AH,'odd number!$'
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+    lea dx,msg1
+    mov ah,9
+    int 21h
+
+    mov ah,1
+    int 21h
+    sub al,30h       
+    and al,1        
+    jz even         
+
+    lea dx,odd_msg
+    jmp display
+
+even:
+    lea dx,even_msg
+
+display:
+    mov ah,9
+    int 21h
+    mov ah,4ch
+    int 21h
+main endp
+end main
+-----------------------------
+;big-sum10
+.model small
+.stack 100h
+
+.data
+msg1 db 'enter first digit: $'
+msg2 db 'enter second digit: $'
+big_msg db 'big sum!$'
+small_msg db 'small sum!$'
+num1 db ?
+num2 db ?
+
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+
+    lea dx,msg1
+    mov ah,9
+    int 21h
+
+    mov ah,1
+    int 21h
+    sub al,30h     
+    mov num1,al
+
+    lea dx,msg2
+    mov ah,9
+    int 21h
+
+    mov ah,1
+    int 21h
+    sub al,30h      
+    mov num2,al
+
+    mov al,num1
+    add al,num2     
+    cmp al,10       
+    jg big_sum       
+
+    lea dx,small_msg
+    jmp display
+
+big_sum:
+    lea dx,big_msg
+
+display:
+    mov ah,9
+    int 21h
+
+    mov ah,4ch
+    int 21h
+
+main endp
+end main
+
+
+
